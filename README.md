@@ -1,1 +1,5 @@
-# Mindata
+# Mindata  
+Consideraciones:  
+
+No se agregan 
+
