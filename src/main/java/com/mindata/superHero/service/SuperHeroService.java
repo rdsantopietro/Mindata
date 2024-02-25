@@ -1,9 +1,8 @@
 package com.mindata.superHero.service;
 
 import com.mindata.superHero.domain.SuperHero;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SuperHeroService {
@@ -14,9 +13,9 @@ public interface SuperHeroService {
 
     Optional<SuperHero> partialUpdate(SuperHero superHero);
 
-    Page<SuperHero> findAll();
+    List<SuperHero> findAll();
 
-    Page<SuperHero> findAllByName(String name);
+    List<SuperHero> findAllByName(String name);
 
     Optional<SuperHero> findOne(Long id);
 
