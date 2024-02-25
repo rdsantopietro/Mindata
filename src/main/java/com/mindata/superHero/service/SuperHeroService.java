@@ -9,9 +9,7 @@ public interface SuperHeroService {
 
     SuperHero save(SuperHero superHero);
 
-    Optional<SuperHero> update(SuperHero superHero);
-
-    Optional<SuperHero> partialUpdate(SuperHero superHero);
+    SuperHero update(SuperHero superHero);
 
     List<SuperHero> findAll();
 
