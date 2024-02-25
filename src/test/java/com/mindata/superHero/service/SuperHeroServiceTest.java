@@ -3,6 +3,7 @@ package com.mindata.superHero.service;
 import com.github.javafaker.Faker;
 import com.mindata.superHero.domain.SuperHero;
 import com.mindata.superHero.repository.SuperHeroRepository;
+import com.mindata.superHero.service.impl.SuperHeroServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
