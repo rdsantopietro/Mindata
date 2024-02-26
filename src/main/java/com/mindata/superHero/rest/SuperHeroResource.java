@@ -2,6 +2,8 @@ package com.mindata.superHero.rest;
 
 
 import com.mindata.superHero.domain.SuperHero;
+import com.mindata.superHero.error.IdNotNullException;
+import com.mindata.superHero.error.IdNullException;
 import com.mindata.superHero.rest.util.LogExecutionTime;
 import com.mindata.superHero.rest.util.ResponseUtil;
 import com.mindata.superHero.service.SuperHeroService;
@@ -28,6 +30,9 @@ public class SuperHeroResource {
     @PostMapping
     @LogExecutionTime
     public ResponseEntity<SuperHero> saveSuperHero(@RequestBody SuperHero superHero) {
+        if (superHero.getId() != null){
+            throw new IdNotNullException() ;
+        }
         log.debug("REST request to save SuperHero: {}", superHero);
         SuperHero savedSuperHero = superHeroService.save(superHero);
         return new ResponseEntity<>(savedSuperHero, HttpStatus.CREATED);
@@ -35,6 +40,9 @@ public class SuperHeroResource {
 
     @PutMapping
     public ResponseEntity<SuperHero> updateSuperHero(@RequestBody SuperHero superHero) {
+        if (superHero.getId() == null){
+            throw new IdNullException() ;
+        }
         log.debug("REST request to update SuperHero: {}", superHero);
         SuperHero updatedSuperHero = superHeroService.update(superHero);
         return ResponseEntity.ok(updatedSuperHero);
