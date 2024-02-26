@@ -2,6 +2,7 @@ package com.mindata.superHero.rest;
 
 
 import com.mindata.superHero.domain.SuperHero;
+import com.mindata.superHero.rest.util.LogExecutionTime;
 import com.mindata.superHero.rest.util.ResponseUtil;
 import com.mindata.superHero.service.SuperHeroService;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class SuperHeroResource {
     private SuperHeroService superHeroService;
 
     @PostMapping
+    @LogExecutionTime
     public ResponseEntity<SuperHero> saveSuperHero(@RequestBody SuperHero superHero) {
         log.debug("REST request to save SuperHero: {}", superHero);
         SuperHero savedSuperHero = superHeroService.save(superHero);
@@ -39,6 +41,7 @@ public class SuperHeroResource {
     }
 
     @GetMapping
+    @LogExecutionTime
     public ResponseEntity<List<SuperHero>> getAllSuperHeroes() {
         log.debug("REST request to get all SuperHeroes");
         List<SuperHero> superHeroes = superHeroService.findAll();
@@ -46,6 +49,7 @@ public class SuperHeroResource {
     }
 
     @GetMapping("/search")
+    @LogExecutionTime
     public ResponseEntity<List<SuperHero>> findSuperHeroByName(@RequestParam String name) {
         log.debug("REST request to search SuperHeros by name {}", name);
         List<SuperHero> superHeroes = superHeroService.findAllByName(name);
@@ -53,6 +57,7 @@ public class SuperHeroResource {
     }
 
     @GetMapping("/{id}")
+    @LogExecutionTime
     public ResponseEntity<SuperHero> getSuperHeroById(@PathVariable Long id) {
         log.debug("REST request to get SuperHero by id {}", id);
         Optional<SuperHero> superHero = superHeroService.findOne(id);

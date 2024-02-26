@@ -13,11 +13,11 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.xml
   h2:
     console.enabled: true
     path: /h2-console
-    settings.trace: true
+    settings.trace: false
     settings.web-allow-others: false
