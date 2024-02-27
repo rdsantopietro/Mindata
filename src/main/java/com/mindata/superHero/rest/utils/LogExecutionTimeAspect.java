@@ -1,4 +1,4 @@
-package com.mindata.superHero.rest.util;
+package com.mindata.superHero.rest.utils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

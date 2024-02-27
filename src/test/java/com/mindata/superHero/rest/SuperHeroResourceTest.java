@@ -1,12 +1,12 @@
 package com.mindata.superHero.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.javafaker.Faker;
 import com.mindata.superHero.domain.SuperHero;
 import com.mindata.superHero.error.GlobalExceptionHandler;
 import com.mindata.superHero.error.IdNotNullException;
 import com.mindata.superHero.error.IdNullException;
 import com.mindata.superHero.service.SuperHeroService;
+import com.mindata.superHero.utils.RandomSuperHeroGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -35,14 +35,15 @@ public class SuperHeroResourceTest {
 
     private ObjectMapper objectMapper;
 
+    private RandomSuperHeroGenerator randomSuperHeroGenerator;
+
     @Mock
     private SuperHeroService superHeroService;
     @InjectMocks
     private SuperHeroResource superHeroResource;
 
-    private final String resourcePath = "/superheroes";
+    private final static String RESOURCE_PATH = "/superheroes";
 
-    private Faker faker;
 
     @BeforeEach
     public void setup(){
@@ -50,12 +51,12 @@ public class SuperHeroResourceTest {
         objectMapper = new ObjectMapper();
         mvc = MockMvcBuilders.standaloneSetup(superHeroResource)
                 .setControllerAdvice(new GlobalExceptionHandler()).build();
-        faker = new Faker();
+        randomSuperHeroGenerator = new RandomSuperHeroGenerator();
     }
 
     @Test
     public void testPostSuperHero_shouldToCreateSuperHero() throws Exception {
-        SuperHero superHero = getRandomSuperHero();
+        SuperHero superHero = randomSuperHeroGenerator.getRandomSuperHero();
         SuperHero result = SuperHero.builder().id(1L)
                 .name(superHero.getName())
                 .alias(superHero.getAlias())
@@ -64,7 +65,7 @@ public class SuperHeroResourceTest {
 
         when(superHeroService.save(superHero)).thenReturn(result);
 
-        mvc.perform(post(resourcePath,superHero)
+        mvc.perform(post(RESOURCE_PATH,superHero)
                     .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(superHero)))
@@ -75,7 +76,7 @@ public class SuperHeroResourceTest {
 
     @Test
     public void testPostSuperHeroWhitNotNullId_shouldToReturnBadRequest() throws  Exception {
-        SuperHero superHero = getRandomSuperHero();
+        SuperHero superHero = randomSuperHeroGenerator.getRandomSuperHero();
         superHero.setId(1L);
 
         mvc.perform(post("/superheroes")
@@ -88,7 +89,7 @@ public class SuperHeroResourceTest {
 
     @Test
     public void testPutSuperHeroWhitNullId_shouldToReturnBadRequest() throws  Exception {
-        SuperHero superHero = getRandomSuperHero();
+        SuperHero superHero = randomSuperHeroGenerator.getRandomSuperHero();
 
         mvc.perform(put("/superheroes")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -100,7 +101,7 @@ public class SuperHeroResourceTest {
 
     @Test
     public void testPutSuperHero_shouldToUpdateSuperHero() throws  Exception {
-        SuperHero superHero = getRandomSuperHero();
+        SuperHero superHero = randomSuperHeroGenerator.getRandomSuperHero();
         superHero.setId(1L);
 
         when(superHeroService.update(superHero)).thenReturn(superHero);
@@ -114,15 +115,6 @@ public class SuperHeroResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(superHero.getId()));
     }
 
-    private SuperHero getRandomSuperHero() {
-        SuperHero superHero =
-                SuperHero.builder()
-                        .name(faker.superhero().name())
-                        .alias(faker.superhero().name())
-                        .ability(faker.superhero().power())
-                        .build();
-        return superHero;
 
-    }
 
 }

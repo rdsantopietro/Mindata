@@ -1,4 +1,4 @@
-package com.mindata.superHero.rest.util;
+package com.mindata.superHero.rest.utils;
 
 import org.springframework.http.ResponseEntity;
 

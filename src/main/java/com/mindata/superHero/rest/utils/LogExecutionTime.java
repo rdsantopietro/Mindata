@@ -1,4 +1,4 @@
-package com.mindata.superHero.rest.util;
+package com.mindata.superHero.rest.utils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
