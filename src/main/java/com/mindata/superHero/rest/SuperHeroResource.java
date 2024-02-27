@@ -7,12 +7,12 @@ import com.mindata.superHero.error.IdNullException;
 import com.mindata.superHero.rest.utils.LogExecutionTime;
 import com.mindata.superHero.rest.utils.ResponseUtil;
 import com.mindata.superHero.service.SuperHeroService;
-import jakarta.annotation.security.RolesAllowed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,7 +78,7 @@ public class SuperHeroResource {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed("ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteSuperHero(@PathVariable Long id) {
         log.debug("REST request to delete SuperHero by id {}", id);
         superHeroService.delete(id);
