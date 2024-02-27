@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  superhero-service:
+    container_name: superhero-service
+    build:
+      dockerfile: Dockerfile
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    ports:
+      - 8081:8081
+      - 5005:5005
