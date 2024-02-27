@@ -29,39 +29,43 @@ public class SuperHeroResource {
 
     @PostMapping
     @LogExecutionTime
-    public ResponseEntity<SuperHero> saveSuperHero(@RequestBody SuperHero superHero) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public SuperHero saveSuperHero(@RequestBody SuperHero superHero) throws  IdNotNullException {
         if (superHero.getId() != null){
             throw new IdNotNullException() ;
         }
         log.debug("REST request to save SuperHero: {}", superHero);
         SuperHero savedSuperHero = superHeroService.save(superHero);
-        return new ResponseEntity<>(savedSuperHero, HttpStatus.CREATED);
+        return savedSuperHero;
     }
 
     @PutMapping
-    public ResponseEntity<SuperHero> updateSuperHero(@RequestBody SuperHero superHero) {
+    @ResponseStatus(HttpStatus.OK)
+    public SuperHero updateSuperHero(@RequestBody SuperHero superHero)  throws  IdNullException{
         if (superHero.getId() == null){
             throw new IdNullException() ;
         }
         log.debug("REST request to update SuperHero: {}", superHero);
         SuperHero updatedSuperHero = superHeroService.update(superHero);
-        return ResponseEntity.ok(updatedSuperHero);
+        return updatedSuperHero;
     }
 
     @GetMapping
     @LogExecutionTime
-    public ResponseEntity<List<SuperHero>> getAllSuperHeroes() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<SuperHero> getAllSuperHeroes() {
         log.debug("REST request to get all SuperHeroes");
         List<SuperHero> superHeroes = superHeroService.findAll();
-        return ResponseEntity.ok(superHeroes);
+        return superHeroes;
     }
 
     @GetMapping("/search")
     @LogExecutionTime
-    public ResponseEntity<List<SuperHero>> findSuperHeroByName(@RequestParam String name) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<SuperHero> findSuperHeroByName(@RequestParam String name) {
         log.debug("REST request to search SuperHeros by name {}", name);
         List<SuperHero> superHeroes = superHeroService.findAllByName(name);
-        return ResponseEntity.ok(superHeroes);
+        return superHeroes;
     }
 
     @GetMapping("/{id}")
