@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class SuperHeroApplicationTests {
 
 	@Autowired
@@ -37,7 +37,6 @@ class SuperHeroApplicationTests {
     public void setup(){
 		randomSuperHeroGenerator = new RandomSuperHeroGenerator();
 		objectMapper = new ObjectMapper();
-
 	}
 
 	@Test
